@@ -17,8 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="..\_appsettings\appsettings.json" Link="appsettings.json" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
-    <Content Include="..\_appsettings\appsettings.Development.json" Link="appsettings.Development.json" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="..\_appsettings\appsettings.json" Link="appsettings.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="..\_appsettings\appsettings.Development.json" Link="appsettings.Development.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
   
 </Project>
