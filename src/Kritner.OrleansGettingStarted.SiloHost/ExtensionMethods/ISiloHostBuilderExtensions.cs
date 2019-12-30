@@ -43,6 +43,7 @@ namespace Kritner.OrleansGettingStarted.SiloHost.ExtensionMethods
                     IPEndPoint.Parse(orleansConfig.NodeIpAddresses[0])
                 );
                 builder.ConfigureEndpoints(
+                    IPAddress.Parse(orleansConfig.NodeIpAddresses[1]),
                     siloPort: orleansConfig.SiloPort,
                     gatewayPort: orleansConfig.GatewayPort
                 );
@@ -56,9 +57,10 @@ namespace Kritner.OrleansGettingStarted.SiloHost.ExtensionMethods
                     IPEndPoint.Parse(orleansConfig.NodeIpAddresses[0])
                 );
                 builder.ConfigureEndpoints(
-                    siloPort: orleansConfig.SiloPort,
-                    gatewayPort: orleansConfig.GatewayPort
-                );
+                   IPAddress.Parse(orleansConfig.NodeIpAddresses[1]),
+                   siloPort: orleansConfig.SiloPort,
+                   gatewayPort: orleansConfig.GatewayPort
+               );
             }
            else if (hostEnvironment.IsProduction())
             {
