@@ -10,7 +10,7 @@ namespace Kritner.Orleans.GettingStarted.Grains
     {
         private readonly IPersistentState<GreetingArchive> _archive;
 
-        public HelloArchiveGrain([PersistentState("archive", "ArchiveStorage")] IPersistentState<GreetingArchive> archive)
+        public HelloArchiveGrain([PersistentState("archive", "OrleansMemoryProvider")] IPersistentState<GreetingArchive> archive)
         {
             this._archive = archive;
         }
