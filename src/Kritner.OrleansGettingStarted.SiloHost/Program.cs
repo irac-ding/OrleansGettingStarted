@@ -56,7 +56,7 @@ namespace Kritner.OrleansGettingStarted.SiloHost
             var builder = new SiloHostBuilder()
                 .ConfigureClustering(
                     ServiceProvider.GetService<IOptions<OrleansConfig>>(),
-                    Startup.HostingEnvironment.EnvironmentName
+                    Startup.HostingEnvironment
                 )
                 .Configure<ClusterOptions>(options =>
                 {

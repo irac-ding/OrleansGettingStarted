@@ -1,4 +1,5 @@
 ﻿using Kritner.OrleansGettingStarted.Common.Config;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Orleans.Configuration;
 using Orleans.Hosting;
@@ -19,7 +20,7 @@ namespace Kritner.OrleansGettingStarted.SiloHost.ExtensionMethods
         public static ISiloHostBuilder ConfigureClustering(
             this ISiloHostBuilder builder,
             IOptions<OrleansConfig> orleansConfigOptions,
-            string environmentName
+            IHostEnvironment hostEnvironment
         )
         {
             if (builder == null)
@@ -33,29 +34,46 @@ namespace Kritner.OrleansGettingStarted.SiloHost.ExtensionMethods
 
             builder.UseLocalhostClustering();
             builder.Configure<EndpointOptions>(options => options.AdvertisedIPAddress = IPAddress.Loopback);
-
-//            switch (environmentName.ToLower())
-//            {
-//                case "dev":
-//                    builder.UseLocalhostClustering();
-//                    builder.Configure<EndpointOptions>(options => options.AdvertisedIPAddress = IPAddress.Loopback);
-//                    break;
-//                default:
-//                    var orleansConfig = orleansConfigOptions.Value;
-//                    // Configure the first listed node as the "primary node".
-//                    // Note this type of configuration should probably not be used in prod - using HA clustering instead.
-//                    builder.UseDevelopmentClustering(
-//                        new IPEndPoint(
-//                            IPAddress.Parse(orleansConfig.NodeIpAddresses[0]),
-//                            orleansConfig.SiloPort
-//                        )
-//                    );
-//                    builder.ConfigureEndpoints(
-//                        siloPort: orleansConfig.SiloPort,
-//                        gatewayPort: orleansConfig.GatewayPort
-//                    );
-//                    break;
-//            }
+            if (hostEnvironment.IsDevelopment())
+            {
+                var orleansConfig = orleansConfigOptions.Value;
+                // Configure the first listed node as the "primary node".
+                // Note this type of configuration should probably not be used in prod - using HA clustering instead.
+                builder.UseDevelopmentClustering(
+                    IPEndPoint.Parse(orleansConfig.NodeIpAddresses[0])
+                );
+                builder.ConfigureEndpoints(
+                    siloPort: orleansConfig.SiloPort,
+                    gatewayPort: orleansConfig.GatewayPort
+                );
+            }
+            else if (hostEnvironment.IsStaging())
+            {
+                var orleansConfig = orleansConfigOptions.Value;
+                // Configure the first listed node as the "primary node".
+                // Note this type of configuration should probably not be used in prod - using HA clustering instead.
+                builder.UseDevelopmentClustering(
+                    IPEndPoint.Parse(orleansConfig.NodeIpAddresses[0])
+                );
+                builder.ConfigureEndpoints(
+                    siloPort: orleansConfig.SiloPort,
+                    gatewayPort: orleansConfig.GatewayPort
+                );
+            }
+           else if (hostEnvironment.IsProduction())
+            {
+                var orleansConfig = orleansConfigOptions.Value;
+                // Configure the first listed node as the "primary node".
+                // Note this type of configuration should probably not be used in prod - using HA clustering instead.
+                builder.UseDevelopmentClustering(
+                   IPEndPoint.Parse(orleansConfig.NodeIpAddresses[0])
+                );
+                builder.ConfigureEndpoints(
+                    IPAddress.Parse(orleansConfig.NodeIpAddresses[1]),
+                    siloPort: orleansConfig.SiloPort,
+                    gatewayPort: orleansConfig.GatewayPort
+                );
+            }
 
             return builder;
         }

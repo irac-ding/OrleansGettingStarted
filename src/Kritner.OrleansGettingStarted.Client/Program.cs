@@ -58,7 +58,7 @@ namespace Kritner.OrleansGettingStarted.Client
             client = new ClientBuilder()
                 .ConfigureClustering(
                     ServiceProvider.GetService<IOptions<OrleansConfig>>(), 
-                    Startup.HostingEnvironment.EnvironmentName
+                    Startup.HostingEnvironment
                 )
                 .Configure<ClusterOptions>(options =>
                 {

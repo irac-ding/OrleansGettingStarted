@@ -24,13 +24,14 @@ namespace Kritner.OrleansGettingStarted.Common.Helpers
             var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             if (string.IsNullOrEmpty(environmentName))
             {
-                return "dev";
+                return "Development";
+                //return "Staging";
             }
 
             return environmentName;
         }
 
-        private static IHostingEnvironment GetHostingEnvironment(string environmentName)
+        private static IHostEnvironment GetHostingEnvironment(string environmentName)
         {
             return new HostingEnvironment
             {

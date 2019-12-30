@@ -7,11 +7,11 @@ namespace Kritner.OrleansGettingStarted.Common
 {
     public class Startup
     {
-        public IHostingEnvironment HostingEnvironment { get; }
+        public IHostEnvironment HostingEnvironment { get; }
         public IConfiguration Configuration { get; }
 
         public Startup(
-            IHostingEnvironment hostingEnvironment, 
+            IHostEnvironment hostingEnvironment, 
             IConfigurationBuilder configurationBuilder
         )
         {
