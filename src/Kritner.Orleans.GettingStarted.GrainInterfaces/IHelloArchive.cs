@@ -7,7 +7,7 @@ namespace Kritner.Orleans.GettingStarted.GrainInterfaces
     /// <summary>
     /// Orleans grain communication interface that will save all greetings
     /// </summary>
-    public interface IHelloArchive : IGrainWithIntegerKey
+    public interface IHelloArchive : IGrainWithIntegerKey, IGrainInterfaceMarker
     {
         Task<string> SayHello(string greeting);
 
