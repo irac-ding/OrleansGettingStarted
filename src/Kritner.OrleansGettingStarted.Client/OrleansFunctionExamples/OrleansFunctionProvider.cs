@@ -18,6 +18,8 @@ namespace Kritner.OrleansGettingStarted.Client.OrleansFunctionExamples
                 new EverythingIsOkReminder(),
                 new GrainObserverReceiver(),
                 new GrainObserverEventSender(),
+                new Hello(),
+                new HelloArchive(),
             };
         }
     }

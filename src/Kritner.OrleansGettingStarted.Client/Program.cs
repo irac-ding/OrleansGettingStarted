@@ -11,6 +11,7 @@ using System;
 using System.Threading.Tasks;
 using Kritner.OrleansGettingStarted.Common;
 using Kritner.OrleansGettingStarted.Client.ExtensionMethods;
+using Microsoft.Extensions.Logging;
 
 namespace Kritner.OrleansGettingStarted.Client
 {
@@ -67,7 +68,7 @@ namespace Kritner.OrleansGettingStarted.Client
                 })
                 .ConfigureApplicationParts(parts => parts.AddApplicationPart(typeof(IGrainInterfaceMarker).Assembly).WithReferences())
                 // I don't want the chatter of logging from the client for now.
-                //.ConfigureLogging(logging => logging.AddConsole())
+                .ConfigureLogging(logging => logging.AddConsole())
                 .Build();
 
             await client.Connect(RetryFilter);

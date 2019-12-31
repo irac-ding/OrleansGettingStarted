@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Kritner.Orleans.GettingStarted.GrainInterfaces;
 using Microsoft.Extensions.Logging;
@@ -20,6 +21,8 @@ namespace Kritner.Orleans.GettingStarted.Grains
         Task<string> IHello.SayHello(string greeting)
         {
             logger.LogInformation($"SayHello message received: greeting = '{greeting}'");
+            Console.WriteLine($"You said: '{greeting}', I say: Hello!");
+
             return Task.FromResult($"You said: '{greeting}', I say: Hello!");
         }
     }

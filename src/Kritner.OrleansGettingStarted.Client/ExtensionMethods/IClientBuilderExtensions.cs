@@ -33,8 +33,8 @@ namespace Kritner.OrleansGettingStarted.Client.ExtensionMethods
                 throw new ArgumentException(nameof(orleansConfigOptions));
             }
 
-            builder.UseLocalhostClustering();
-            if(hostEnvironment.IsDevelopment())
+           // builder.UseLocalhostClustering();
+            if (hostEnvironment.IsDevelopment())
             {
                 var orleansConfig = orleansConfigOptions.Value;
                 List<IPEndPoint> nodes = new List<IPEndPoint>();
@@ -44,7 +44,7 @@ namespace Kritner.OrleansGettingStarted.Client.ExtensionMethods
                 }
                 builder.UseStaticClustering(nodes.ToArray());
             }
-            if(hostEnvironment.IsStaging())
+            if (hostEnvironment.IsStaging())
             {
                 var orleansConfig = orleansConfigOptions.Value;
                 List<IPEndPoint> nodes = new List<IPEndPoint>();
@@ -54,7 +54,7 @@ namespace Kritner.OrleansGettingStarted.Client.ExtensionMethods
                 }
                 builder.UseStaticClustering(nodes.ToArray());
             }
-            if(hostEnvironment.IsProduction())
+            if (hostEnvironment.IsProduction())
             {
                 var orleansConfig = orleansConfigOptions.Value;
                 List<IPEndPoint> nodes = new List<IPEndPoint>();

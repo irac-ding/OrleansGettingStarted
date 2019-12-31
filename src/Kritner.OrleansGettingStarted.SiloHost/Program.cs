@@ -13,6 +13,7 @@ using Orleans.Hosting;
 using Orleans.Statistics;
 using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
 
 namespace Kritner.OrleansGettingStarted.SiloHost
 {
@@ -68,10 +69,19 @@ namespace Kritner.OrleansGettingStarted.SiloHost
                 {
                     parts.AddApplicationPart(typeof(IGrainMarker).Assembly).WithReferences();
                 })
-                .ConfigureServices(DependencyInjectionHelper.IocContainerRegistration)
+                .ConfigureServices(
+                DependencyInjectionHelper.IocContainerRegistration
+                )
                 .UsePerfCounterEnvironmentStatistics()
                 .UseDashboard(options => { })
                 .UseInMemoryReminderService()
+                .ConfigureServices(services =>
+                {
+                    services.Configure<ConsoleLifetimeOptions>(options =>
+                    {
+                        options.SuppressStatusMessages = true;
+                    });
+                })
                 .ConfigureLogging(logging => logging.AddConsole());
 
             var host = builder.Build();

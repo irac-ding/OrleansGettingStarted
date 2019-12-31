@@ -1,6 +1,7 @@
 using Kritner.Orleans.GettingStarted.GrainInterfaces;
 using Orleans;
 using Orleans.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -20,7 +21,7 @@ namespace Kritner.Orleans.GettingStarted.Grains
             this._archive.State.Greetings.Add(greeting);
 
             await this._archive.WriteStateAsync();
-
+            Console.WriteLine($"You said: '{greeting}', I say: Hello!");
             return $"You said: '{greeting}', I say: Hello!";
         }
 
