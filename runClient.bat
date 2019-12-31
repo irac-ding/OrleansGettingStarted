@@ -1,0 +1,1 @@
+dotnet run --project ./src/Kritner.OrleansGettingStarted.Client --no-build 
