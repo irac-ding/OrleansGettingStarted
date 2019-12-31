@@ -19,7 +19,7 @@ namespace Kritner.OrleansGettingStarted.Client.OrleansFunctionExamples
             for (int i = 0; i < 1000000; i++)
             {
                 // example of calling IHelloArchive grqain that implements persistence
-                var g = clusterClient.GetGrain<IHelloArchive>(0);
+                var g = clusterClient.GetGrain<IHelloArchive>(i);
                 var response = await g.SayHello("Good day!");
                 Console.WriteLine($"{response}");
 

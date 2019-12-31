@@ -13,6 +13,8 @@ namespace Kritner.OrleansGettingStarted.Common.Config
         /// First IP address is the primary.
         /// </summary>
         public string[] NodeIpAddresses { get; set; }
+
+        public string AdvertisedIPAddress { get; set; }
         /// <summary>
         /// The port used for Client to Server communication.
         /// </summary>
@@ -21,5 +23,7 @@ namespace Kritner.OrleansGettingStarted.Common.Config
         /// The port for Silo to Silo communication
         /// </summary>
         public int SiloPort { get; set; }
+
+        public string ConsulCluster { get; set; }
     }
 }
