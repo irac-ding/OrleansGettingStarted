@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Orleans.Configuration;
 using Orleans.Hosting;
+using Orleans.Providers.MongoDB.Configuration;
 using System;
 using System.Net;
 
@@ -49,10 +50,12 @@ namespace Kritner.OrleansGettingStarted.SiloHost.ExtensionMethods
                     //监听的silo 远程端口连接点
                     options.SiloListeningEndpoint = new IPEndPoint(options.AdvertisedIPAddress, options.SiloPort);
                 })       //监听的主silo 远程连接点 为空则创建一个主silo连接点
-             .UseConsulClustering(gatewayOptions =>
-             {
-                 gatewayOptions.Address = new Uri(orleansConfig.ConsulCluster);
-             });
+               .UseMongoDBClient(orleansConfig.MongoCluster)//监听的主silo 远程连接点 为空则创建一个主silo连接点
+               .UseMongoDBClustering(options =>
+               {
+                   options.DatabaseName = "OrleansGettingStartedMongo";
+                   options.Strategy = MongoDBMembershipStrategy.SingleDocument;
+               });
             }
             else if (hostEnvironment.IsStaging())
             {
@@ -69,10 +72,12 @@ namespace Kritner.OrleansGettingStarted.SiloHost.ExtensionMethods
                     //监听的silo 远程端口连接点
                     options.SiloListeningEndpoint = new IPEndPoint(options.AdvertisedIPAddress, options.SiloPort);
                 })       //监听的主silo 远程连接点 为空则创建一个主silo连接点
-             .UseConsulClustering(gatewayOptions =>
-             {
-                 gatewayOptions.Address = new Uri(orleansConfig.ConsulCluster);
-             });
+               .UseMongoDBClient(orleansConfig.MongoCluster)//监听的主silo 远程连接点 为空则创建一个主silo连接点
+               .UseMongoDBClustering(options =>
+               {
+                   options.DatabaseName = "OrleansGettingStartedMongo";
+                   options.Strategy = MongoDBMembershipStrategy.SingleDocument;
+               });
             }
             else if (hostEnvironment.IsProduction())
             {
@@ -88,11 +93,13 @@ namespace Kritner.OrleansGettingStarted.SiloHost.ExtensionMethods
                     options.GatewayListeningEndpoint = new IPEndPoint(options.AdvertisedIPAddress, options.GatewayPort);
                     //监听的silo 远程端口连接点
                     options.SiloListeningEndpoint = new IPEndPoint(options.AdvertisedIPAddress, options.SiloPort);
-                })       //监听的主silo 远程连接点 为空则创建一个主silo连接点
-            .UseConsulClustering(gatewayOptions =>
-            {
-                gatewayOptions.Address = new Uri(orleansConfig.ConsulCluster);
-            });
+                })
+               .UseMongoDBClient(orleansConfig.MongoCluster)//监听的主silo 远程连接点 为空则创建一个主silo连接点
+               .UseMongoDBClustering(options =>
+               {
+                   options.DatabaseName = "OrleansGettingStartedMongo";
+                   options.Strategy = MongoDBMembershipStrategy.SingleDocument;
+               });
             }
             return builder;
         }

@@ -8,12 +8,6 @@ namespace Kritner.OrleansGettingStarted.Common.Config
     /// </summary>
     public class OrleansConfig
     {
-        /// <summary>
-        /// The IP addresses that will be utilized in the cluster.
-        /// First IP address is the primary.
-        /// </summary>
-        public string[] NodeIpAddresses { get; set; }
-
         public string AdvertisedIPAddress { get; set; }
         /// <summary>
         /// The port used for Client to Server communication.
@@ -24,6 +18,6 @@ namespace Kritner.OrleansGettingStarted.Common.Config
         /// </summary>
         public int SiloPort { get; set; }
 
-        public string ConsulCluster { get; set; }
+        public string MongoCluster { get; set; }
     }
 }

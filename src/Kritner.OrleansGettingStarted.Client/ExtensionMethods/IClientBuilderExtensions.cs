@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Orleans;
+using Orleans.Providers.MongoDB.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -19,7 +20,7 @@ namespace Kritner.OrleansGettingStarted.Client.ExtensionMethods
         /// <param name="orleansConfigOptions">The Orleans configuration options.</param>
         /// <param name="environmentName">The environment.</param>
         public static IClientBuilder ConfigureClustering(
-            this IClientBuilder builder, 
+            this IClientBuilder builder,
             IOptions<OrleansConfig> orleansConfigOptions,
             IHostEnvironment hostEnvironment
         )
@@ -33,36 +34,34 @@ namespace Kritner.OrleansGettingStarted.Client.ExtensionMethods
                 throw new ArgumentException(nameof(orleansConfigOptions));
             }
 
-           // builder.UseLocalhostClustering();
+            // builder.UseLocalhostClustering();
+            var orleansConfig = orleansConfigOptions.Value;
             if (hostEnvironment.IsDevelopment())
             {
-                var orleansConfig = orleansConfigOptions.Value;
-                List<IPEndPoint> nodes = new List<IPEndPoint>();
-                foreach (var node in orleansConfig.NodeIpAddresses)
-                {
-                    nodes.Add(IPEndPoint.Parse(node));
-                }
-                builder.UseStaticClustering(nodes.ToArray());
+               builder.UseMongoDBClient(orleansConfig.MongoCluster)
+               .UseMongoDBClustering(options =>
+               {
+                   options.DatabaseName = "OrleansGettingStartedMongo";
+                   options.Strategy = MongoDBMembershipStrategy.SingleDocument;
+               });
             }
             if (hostEnvironment.IsStaging())
             {
-                var orleansConfig = orleansConfigOptions.Value;
-                List<IPEndPoint> nodes = new List<IPEndPoint>();
-                foreach (var node in orleansConfig.NodeIpAddresses)
-                {
-                    nodes.Add(IPEndPoint.Parse(node));
-                }
-                builder.UseStaticClustering(nodes.ToArray());
+              builder.UseMongoDBClient(orleansConfig.MongoCluster)
+              .UseMongoDBClustering(options =>
+              {
+                  options.DatabaseName = "OrleansGettingStartedMongo";
+                  options.Strategy = MongoDBMembershipStrategy.SingleDocument;
+              });
             }
             if (hostEnvironment.IsProduction())
             {
-                var orleansConfig = orleansConfigOptions.Value;
-                List<IPEndPoint> nodes = new List<IPEndPoint>();
-                foreach (var node in orleansConfig.NodeIpAddresses)
-                {
-                    nodes.Add(IPEndPoint.Parse(node));
-                }
-                builder.UseStaticClustering(nodes.ToArray());
+              builder.UseMongoDBClient(orleansConfig.MongoCluster)
+              .UseMongoDBClustering(options =>
+              {
+                  options.DatabaseName = "OrleansGettingStartedMongo";
+                  options.Strategy = MongoDBMembershipStrategy.SingleDocument;
+              });
             }
 
             return builder;
