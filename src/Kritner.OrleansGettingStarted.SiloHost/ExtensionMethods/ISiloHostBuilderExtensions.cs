@@ -6,6 +6,7 @@ using Orleans.Hosting;
 using Orleans.Providers.MongoDB.Configuration;
 using System;
 using System.Net;
+using Newtonsoft.Json;
 
 namespace Kritner.OrleansGettingStarted.SiloHost.ExtensionMethods
 {
@@ -24,6 +25,8 @@ namespace Kritner.OrleansGettingStarted.SiloHost.ExtensionMethods
             IHostEnvironment hostEnvironment
         )
         {
+            var createShardKey = false;
+
             if (builder == null)
             {
                 throw new ArgumentNullException(nameof(builder));
@@ -55,6 +58,22 @@ namespace Kritner.OrleansGettingStarted.SiloHost.ExtensionMethods
                {
                    options.DatabaseName = "OrleansGettingStartedMongo";
                    options.Strategy = MongoDBMembershipStrategy.SingleDocument;
+               })
+               .UseMongoDBReminders(options =>
+               {
+                     options.DatabaseName = "OrleansGettingStartedMongo";
+                     options.CreateShardKeyForCosmos = createShardKey;
+               })
+               .AddMongoDBGrainStorage("MongoDBStore", options =>
+               {
+                   options.DatabaseName = "OrleansGettingStartedMongo";
+                   options.CreateShardKeyForCosmos = createShardKey;
+                   options.ConfigureJsonSerializerSettings = settings =>
+                   {
+                       settings.NullValueHandling = NullValueHandling.Include;
+                       settings.ObjectCreationHandling = ObjectCreationHandling.Replace;
+                       settings.DefaultValueHandling = DefaultValueHandling.Populate;
+                   };
                });
             }
             else if (hostEnvironment.IsStaging())

@@ -64,7 +64,7 @@ namespace Kritner.OrleansGettingStarted.SiloHost
                     options.ClusterId = "dev";
                     options.ServiceId = "HelloWorldApp";
                 })
-                .AddMemoryGrainStorage(Constants.OrleansMemoryProvider)
+                //.AddMemoryGrainStorage(Constants.OrleansMemoryProvider)
                 .ConfigureApplicationParts(parts =>
                 {
                     parts.AddApplicationPart(typeof(IGrainMarker).Assembly).WithReferences();
@@ -74,7 +74,7 @@ namespace Kritner.OrleansGettingStarted.SiloHost
                 )
                 .UsePerfCounterEnvironmentStatistics()
                 .UseDashboard(options => { })
-                .UseInMemoryReminderService()
+                //.UseInMemoryReminderService()
                 .ConfigureServices(services =>
                 {
                     services.Configure<ConsoleLifetimeOptions>(options =>
