@@ -11,6 +11,7 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.1.0" />
     <PackageReference Include="Microsoft.Orleans.Client" Version="3.0.2" />
+    <PackageReference Include="Microsoft.Orleans.OrleansConsulUtils" Version="3.0.2" />
   </ItemGroup>
 
   <ItemGroup>

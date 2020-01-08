@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Orleans;
+using Orleans.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -32,37 +33,35 @@ namespace Kritner.OrleansGettingStarted.Client.ExtensionMethods
             {
                 throw new ArgumentException(nameof(orleansConfigOptions));
             }
-
-           // builder.UseLocalhostClustering();
+            var orleansConfig = orleansConfigOptions.Value;
+            // builder.UseLocalhostClustering();
             if (hostEnvironment.IsDevelopment())
             {
-                var orleansConfig = orleansConfigOptions.Value;
-                List<IPEndPoint> nodes = new List<IPEndPoint>();
-                foreach (var node in orleansConfig.NodeIpAddresses)
-                {
-                    nodes.Add(IPEndPoint.Parse(node));
-                }
-                builder.UseStaticClustering(nodes.ToArray());
+                //var orleansConfig = orleansConfigOptions.Value;
+                //List<IPEndPoint> nodes = new List<IPEndPoint>();
+                //foreach (var node in orleansConfig.NodeIpAddresses)
+                //{
+                //    nodes.Add(IPEndPoint.Parse(node));
+                //}
+                //builder.UseStaticClustering(nodes.ToArray());
+                builder.UseConsulClustering(gatewayOptions =>
+                  {
+                      gatewayOptions.Address = new Uri(orleansConfig.ConsulCluster);
+                  });
             }
             if (hostEnvironment.IsStaging())
             {
-                var orleansConfig = orleansConfigOptions.Value;
-                List<IPEndPoint> nodes = new List<IPEndPoint>();
-                foreach (var node in orleansConfig.NodeIpAddresses)
+                builder.UseConsulClustering(gatewayOptions =>
                 {
-                    nodes.Add(IPEndPoint.Parse(node));
-                }
-                builder.UseStaticClustering(nodes.ToArray());
+                    gatewayOptions.Address = new Uri(orleansConfig.ConsulCluster);
+                });
             }
             if (hostEnvironment.IsProduction())
             {
-                var orleansConfig = orleansConfigOptions.Value;
-                List<IPEndPoint> nodes = new List<IPEndPoint>();
-                foreach (var node in orleansConfig.NodeIpAddresses)
+                builder.UseConsulClustering(gatewayOptions =>
                 {
-                    nodes.Add(IPEndPoint.Parse(node));
-                }
-                builder.UseStaticClustering(nodes.ToArray());
+                    gatewayOptions.Address = new Uri(orleansConfig.ConsulCluster);
+                });
             }
 
             return builder;
