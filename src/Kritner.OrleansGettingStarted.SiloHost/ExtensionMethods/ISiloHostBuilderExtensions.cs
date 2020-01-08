@@ -7,6 +7,7 @@ using Orleans.Providers.MongoDB.Configuration;
 using System;
 using System.Net;
 using Newtonsoft.Json;
+using Kritner.Orleans.GettingStarted.Grains;
 
 namespace Kritner.OrleansGettingStarted.SiloHost.ExtensionMethods
 {
@@ -64,7 +65,7 @@ namespace Kritner.OrleansGettingStarted.SiloHost.ExtensionMethods
                      options.DatabaseName = "OrleansGettingStartedMongo";
                      options.CreateShardKeyForCosmos = createShardKey;
                })
-               .AddMongoDBGrainStorage("MongoDBStore", options =>
+               .AddMongoDBGrainStorage(Constants.OrleansMongoProvider, options =>
                {
                    options.DatabaseName = "OrleansGettingStartedMongo";
                    options.CreateShardKeyForCosmos = createShardKey;
