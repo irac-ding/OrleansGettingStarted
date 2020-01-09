@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Orleans;
-using Orleans.Providers.MongoDB.Configuration;
+using Orleans.Clustering.Redis;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -38,30 +38,27 @@ namespace Kritner.OrleansGettingStarted.Client.ExtensionMethods
             var orleansConfig = orleansConfigOptions.Value;
             if (hostEnvironment.IsDevelopment())
             {
-               builder.UseMongoDBClient(orleansConfig.MongoCluster)
-               .UseMongoDBClustering(options =>
-               {
-                   options.DatabaseName = "OrleansGettingStartedMongo";
-                   options.Strategy = MongoDBMembershipStrategy.SingleDocument;
-               });
+                builder.UseRedisMembership(opt =>
+                 {
+                     opt.ConnectionString = orleansConfig.RedisCluster;
+                     opt.Database = 0;
+                 });
             }
             if (hostEnvironment.IsStaging())
             {
-              builder.UseMongoDBClient(orleansConfig.MongoCluster)
-              .UseMongoDBClustering(options =>
-              {
-                  options.DatabaseName = "OrleansGettingStartedMongo";
-                  options.Strategy = MongoDBMembershipStrategy.SingleDocument;
-              });
+                builder.UseRedisMembership(opt =>
+                {
+                    opt.ConnectionString = orleansConfig.RedisCluster;
+                    opt.Database = 0;
+                });
             }
             if (hostEnvironment.IsProduction())
             {
-              builder.UseMongoDBClient(orleansConfig.MongoCluster)
-              .UseMongoDBClustering(options =>
-              {
-                  options.DatabaseName = "OrleansGettingStartedMongo";
-                  options.Strategy = MongoDBMembershipStrategy.SingleDocument;
-              });
+                builder.UseRedisMembership(opt =>
+                {
+                    opt.ConnectionString = orleansConfig.RedisCluster;
+                    opt.Database = 0;
+                });
             }
 
             return builder;

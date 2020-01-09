@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Kritner.Orleans.GettingStarted.Grains
 {
-    [StorageProvider(ProviderName = Constants.OrleansMongoProvider)]
+    [StorageProvider(ProviderName = Constants.OrleansMemoryProvider)]
     public class EverythingIsOkGrain : Grain, IEverythingIsOkGrain
     {
         IGrainReminder _reminder = null;

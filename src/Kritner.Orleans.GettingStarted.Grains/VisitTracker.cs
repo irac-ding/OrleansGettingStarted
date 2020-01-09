@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Kritner.Orleans.GettingStarted.Grains
 {
-    [StorageProvider(ProviderName = Constants.OrleansMongoProvider)]
+    [StorageProvider(ProviderName = Constants.OrleansRedisProvider)]
     public class VisitTracker : Grain<VisitTrackerState>, IVisitTracker, IGrainMarker
     {
         public Task<int> GetNumberOfVisits()

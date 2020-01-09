@@ -11,12 +11,13 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.1.0" />
     <PackageReference Include="Microsoft.Orleans.Client" Version="3.0.2" />
-    <PackageReference Include="Orleans.Providers.MongoDB" Version="3.1.1" />
+    <PackageReference Include="Orleans.Clustering.Redis" Version="1.1.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Kritner.Orleans.GettingStarted.GrainInterfaces\Kritner.Orleans.GettingStarted.GrainInterfaces.csproj" />
     <ProjectReference Include="..\Kritner.OrleansGettingStarted.Common\Kritner.OrleansGettingStarted.Common.csproj" />
+    <ProjectReference Include="..\Orleans.Clustering.Redis\Orleans.Clustering.Redis.csproj" />
   </ItemGroup>
 
   <ItemGroup>

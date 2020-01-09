@@ -12,7 +12,6 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.1.0" />
     <PackageReference Include="Microsoft.Orleans.OrleansTelemetryConsumers.Counters" Version="3.0.2" />
     <PackageReference Include="Microsoft.Orleans.Server" Version="3.0.2" />
-    <PackageReference Include="Orleans.Providers.MongoDB" Version="3.1.1" />
     <PackageReference Include="OrleansDashboard" Version="3.0.8" />
   </ItemGroup>
 
@@ -20,6 +19,8 @@
     <ProjectReference Include="..\Kritner.Orleans.GettingStarted.GrainInterfaces\Kritner.Orleans.GettingStarted.GrainInterfaces.csproj" />
     <ProjectReference Include="..\Kritner.Orleans.GettingStarted.Grains\Kritner.Orleans.GettingStarted.Grains.csproj" />
     <ProjectReference Include="..\Kritner.OrleansGettingStarted.Common\Kritner.OrleansGettingStarted.Common.csproj" />
+    <ProjectReference Include="..\Orleans.Clustering.Redis\Orleans.Clustering.Redis.csproj" />
+    <ProjectReference Include="..\Orleans.Storage.Redis\Orleans.Persistence.Redis.csproj" />
   </ItemGroup>
 
   <ItemGroup>

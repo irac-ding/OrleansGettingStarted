@@ -3,11 +3,12 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Orleans.Configuration;
 using Orleans.Hosting;
-using Orleans.Providers.MongoDB.Configuration;
 using System;
 using System.Net;
 using Newtonsoft.Json;
 using Kritner.Orleans.GettingStarted.Grains;
+using Orleans.Clustering.Redis;
+using System.Collections.Generic;
 
 namespace Kritner.OrleansGettingStarted.SiloHost.ExtensionMethods
 {
@@ -54,28 +55,17 @@ namespace Kritner.OrleansGettingStarted.SiloHost.ExtensionMethods
                     //监听的silo 远程端口连接点
                     options.SiloListeningEndpoint = new IPEndPoint(options.AdvertisedIPAddress, options.SiloPort);
                 })       //监听的主silo 远程连接点 为空则创建一个主silo连接点
-               .UseMongoDBClient(orleansConfig.MongoCluster)//监听的主silo 远程连接点 为空则创建一个主silo连接点
-               .UseMongoDBClustering(options =>
+               .UseRedisMembership(opt =>
                {
-                   options.DatabaseName = "OrleansGettingStartedMongo";
-                   options.Strategy = MongoDBMembershipStrategy.SingleDocument;
+                   opt.ConnectionString = orleansConfig.RedisCluster;
+                   opt.Database = 0;
                })
-               .UseMongoDBReminders(options =>
+               .AddRedisGrainStorage(Constants.OrleansRedisProvider, options =>
                {
-                     options.DatabaseName = "OrleansGettingStartedMongo";
-                     options.CreateShardKeyForCosmos = createShardKey;
-               })
-               .AddMongoDBGrainStorage(Constants.OrleansMongoProvider, options =>
-               {
-                   options.DatabaseName = "OrleansGettingStartedMongo";
-                   options.CreateShardKeyForCosmos = createShardKey;
-                   options.ConfigureJsonSerializerSettings = settings =>
-                   {
-                       settings.NullValueHandling = NullValueHandling.Include;
-                       settings.ObjectCreationHandling = ObjectCreationHandling.Replace;
-                       settings.DefaultValueHandling = DefaultValueHandling.Populate;
-                   };
-               });
+                   options.ConnectionString = orleansConfig.RedisCluster;
+               }
+               );
+
             }
             else if (hostEnvironment.IsStaging())
             {
@@ -92,12 +82,16 @@ namespace Kritner.OrleansGettingStarted.SiloHost.ExtensionMethods
                     //监听的silo 远程端口连接点
                     options.SiloListeningEndpoint = new IPEndPoint(options.AdvertisedIPAddress, options.SiloPort);
                 })       //监听的主silo 远程连接点 为空则创建一个主silo连接点
-               .UseMongoDBClient(orleansConfig.MongoCluster)//监听的主silo 远程连接点 为空则创建一个主silo连接点
-               .UseMongoDBClustering(options =>
+               .UseRedisMembership(opt =>
                {
-                   options.DatabaseName = "OrleansGettingStartedMongo";
-                   options.Strategy = MongoDBMembershipStrategy.SingleDocument;
-               });
+                   opt.ConnectionString = orleansConfig.RedisCluster;
+                   opt.Database = 0;
+               })
+               .AddRedisGrainStorage(Constants.OrleansRedisProvider, options =>
+               {
+                   options.ConnectionString = orleansConfig.RedisCluster;
+               }
+               );
             }
             else if (hostEnvironment.IsProduction())
             {
@@ -113,13 +107,17 @@ namespace Kritner.OrleansGettingStarted.SiloHost.ExtensionMethods
                     options.GatewayListeningEndpoint = new IPEndPoint(options.AdvertisedIPAddress, options.GatewayPort);
                     //监听的silo 远程端口连接点
                     options.SiloListeningEndpoint = new IPEndPoint(options.AdvertisedIPAddress, options.SiloPort);
-                })
-               .UseMongoDBClient(orleansConfig.MongoCluster)//监听的主silo 远程连接点 为空则创建一个主silo连接点
-               .UseMongoDBClustering(options =>
-               {
-                   options.DatabaseName = "OrleansGettingStartedMongo";
-                   options.Strategy = MongoDBMembershipStrategy.SingleDocument;
-               });
+                })       //监听的主silo 远程连接点 为空则创建一个主silo连接点
+              .UseRedisMembership(opt =>
+              {
+                  opt.ConnectionString = orleansConfig.RedisCluster;
+                  opt.Database = 0;
+              })
+              .AddRedisGrainStorage(Constants.OrleansRedisProvider, options =>
+              {
+                  options.ConnectionString = orleansConfig.RedisCluster;
+              }
+               );
             }
             return builder;
         }

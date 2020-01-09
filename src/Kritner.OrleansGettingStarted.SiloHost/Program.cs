@@ -74,7 +74,7 @@ namespace Kritner.OrleansGettingStarted.SiloHost
                 )
                 .UsePerfCounterEnvironmentStatistics()
                 .UseDashboard(options => { })
-                //.UseInMemoryReminderService()
+                .UseInMemoryReminderService()
                 .ConfigureServices(services =>
                 {
                     services.Configure<ConsoleLifetimeOptions>(options =>

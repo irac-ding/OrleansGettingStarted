@@ -18,6 +18,6 @@ namespace Kritner.OrleansGettingStarted.Common.Config
         /// </summary>
         public int SiloPort { get; set; }
 
-        public string MongoCluster { get; set; }
+        public string RedisCluster { get; set; }
     }
 }

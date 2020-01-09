@@ -8,5 +8,6 @@ namespace Kritner.Orleans.GettingStarted.Grains
     {
         public const string OrleansMemoryProvider = "OrleansMemoryProvider";
         public const string OrleansMongoProvider = "OrleansMongoProvider";
+        public const string OrleansRedisProvider = "OrleansRedisProvider";
     }
 }

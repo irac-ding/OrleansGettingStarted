@@ -11,7 +11,7 @@ namespace Kritner.Orleans.GettingStarted.Grains
     {
         private readonly IPersistentState<GreetingArchive> _archive;
 
-        public HelloArchiveGrain([PersistentState("archive", Constants.OrleansMongoProvider)] IPersistentState<GreetingArchive> archive)
+        public HelloArchiveGrain([PersistentState("archive", Constants.OrleansRedisProvider)] IPersistentState<GreetingArchive> archive)
         {
             this._archive = archive;
         }
