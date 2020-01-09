@@ -14,6 +14,7 @@ using Orleans.Statistics;
 using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
+using System.Runtime.InteropServices;
 
 namespace Kritner.OrleansGettingStarted.SiloHost
 {
@@ -64,17 +65,30 @@ namespace Kritner.OrleansGettingStarted.SiloHost
                     options.ClusterId = "dev";
                     options.ServiceId = "HelloWorldApp";
                 })
-                //.AddMemoryGrainStorage(Constants.OrleansMemoryProvider)
-                .ConfigureApplicationParts(parts =>
-                {
-                    parts.AddApplicationPart(typeof(IGrainMarker).Assembly).WithReferences();
-                })
+                .AddMemoryGrainStorage(Constants.OrleansMemoryProvider)
+                //.ConfigureApplicationParts(parts =>
+                //{
+                //    parts.AddApplicationPart(typeof(IGrainMarker).Assembly).WithReferences();
+                //})
+                .ConfigureApplicationParts(parts => parts.AddFromApplicationBaseDirectory())
                 .ConfigureServices(
                 DependencyInjectionHelper.IocContainerRegistration
                 )
+#if Linux
+                .UseLinuxEnvironmentStatistics()
+#elif Windows
                 .UsePerfCounterEnvironmentStatistics()
-                .UseDashboard(options => { })
-                //.UseInMemoryReminderService()
+#endif
+                .UseDashboard(options =>
+                {
+                    options.Username = "admin";
+                    options.Password = "admin";
+                    options.Host = "*";
+                    options.Port = 8080;
+                    options.HostSelf = true;
+                    options.CounterUpdateIntervalMs = 1000;
+                })
+                .UseInMemoryReminderService()
                 .ConfigureServices(services =>
                 {
                     services.Configure<ConsoleLifetimeOptions>(options =>
@@ -84,6 +98,13 @@ namespace Kritner.OrleansGettingStarted.SiloHost
                 })
                 .ConfigureLogging(logging => logging.AddConsole());
 
+          
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                Console.WriteLine("Running on Linux!");
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                Console.WriteLine("Running on macOS!");
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                Console.WriteLine("Running on Windows!");
             var host = builder.Build();
             await host.StartAsync();
             return host;
