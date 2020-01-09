@@ -32,8 +32,8 @@ namespace Kritner.OrleansGettingStarted.SiloHost.ExtensionMethods
                 throw new ArgumentException(nameof(orleansConfigOptions));
             }
             var orleansConfig = orleansConfigOptions.Value;
-            builder.UseLocalhostClustering();
-            builder.Configure<EndpointOptions>(options => options.AdvertisedIPAddress = IPAddress.Loopback);
+            //builder.UseLocalhostClustering();
+            //builder.Configure<EndpointOptions>(options => options.AdvertisedIPAddress = IPAddress.Loopback);
             if (hostEnvironment.IsDevelopment())
             {
                 builder.Configure<EndpointOptions>(options =>
