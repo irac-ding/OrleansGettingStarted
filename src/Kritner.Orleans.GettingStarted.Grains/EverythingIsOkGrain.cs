@@ -30,6 +30,19 @@ namespace Kritner.Orleans.GettingStarted.Grains
                 "Everything's ok!",
                 "This alarm will sound every 1 minute, as long as everything is ok!"
             );
+            ////when ReceiveReminder we kppp activ the gain and update the reminder to break the period at least 1 minute limit.
+            //string keyGain = $"{nameof(IEverythingIsOkGrain)}-{Guid.NewGuid()}";
+            //var grain = GrainFactory.GetGrain<IEverythingIsOkGrain>(keyGain);
+            //await RegisterOrUpdateReminder(
+            //    keyGain,
+            //    TimeSpan.FromSeconds(3),
+            //    TimeSpan.FromMinutes(1) // apparently the minimum
+            //);
+
+            //when ReceiveReminder we kppp active a new gain and register the reminder.
+            //string keyGain = $"{nameof(IEverythingIsOkGrain)}-{Guid.NewGuid()}";
+            //var grain = GrainFactory.GetGrain<IEverythingIsOkGrain>(keyGain);
+            //await grain.Start();
         }
 
         public async Task Start()
