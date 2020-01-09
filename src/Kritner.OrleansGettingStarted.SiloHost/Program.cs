@@ -113,6 +113,12 @@ namespace Kritner.OrleansGettingStarted.SiloHost
 #elif Windows
             Console.WriteLine("Built in Windows 1!");
 #endif
+
+#if NETCOREAPP
+            Console.WriteLine("NETCOREAPP!");
+#else
+            Console.WriteLine("Not NETCOREAPP!");
+#endif
             var host = builder.Build();
             await host.StartAsync();
             return host;
