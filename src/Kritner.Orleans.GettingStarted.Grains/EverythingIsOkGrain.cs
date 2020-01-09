@@ -40,9 +40,9 @@ namespace Kritner.Orleans.GettingStarted.Grains
             //);
 
             //when ReceiveReminder we kppp active a new gain and register the reminder.
-            string keyGain = $"{nameof(IEverythingIsOkGrain)}-{Guid.NewGuid()}";
-            var grain = GrainFactory.GetGrain<IEverythingIsOkGrain>(keyGain);
-            await grain.Start();
+            //string keyGain = $"{nameof(IEverythingIsOkGrain)}-{Guid.NewGuid()}";
+            //var grain = GrainFactory.GetGrain<IEverythingIsOkGrain>(keyGain);
+            //await grain.Start();
         }
 
         public async Task Start()
