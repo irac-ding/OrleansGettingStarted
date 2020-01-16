@@ -1,0 +1,1 @@
+C:/Consul/consul agent -ui -server -bootstrap -data-dir "C:\Consul\Data" -client=0.0.0.0
