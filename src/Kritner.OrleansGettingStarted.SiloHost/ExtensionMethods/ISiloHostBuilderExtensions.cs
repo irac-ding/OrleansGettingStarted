@@ -39,6 +39,7 @@ namespace Kritner.OrleansGettingStarted.SiloHost.ExtensionMethods
             var orleansConfig = orleansConfigOptions.Value;
             //builder.UseLocalhostClustering();
             //builder.Configure<EndpointOptions>(options => options.AdvertisedIPAddress = IPAddress.Loopback);
+            Console.WriteLine(JsonConvert.SerializeObject(orleansConfig));
             if (hostEnvironment.IsDevelopment())
             {
                 builder.Configure<EndpointOptions>(options =>
