@@ -7,3 +7,4 @@ start  runServer.bat
 TIMEOUT /T 5
 start  runClient.bat
 start "C:\Program Files\Google\Chrome\Application\chrome.exe" http://localhost:8500/ui
+start "C:\Program Files\Google\Chrome\Application\chrome.exe" http://localhost:8080/
